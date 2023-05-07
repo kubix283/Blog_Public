@@ -1,5 +1,4 @@
 from django.urls import reverse_lazy, reverse
-from django.shortcuts import render
 from .models import Post
 from django.views.generic import (ListView, DetailView, CreateView,
                                   UpdateView, DeleteView,)
@@ -29,7 +28,7 @@ class PostUpdateView(UpdateView):
     model = Post
     template_name = 'post_update.html'
     fields = ['title', 'description']
-    
+
     def get_success_url(self):
         pk = self.kwargs["pk"]
         return reverse('post_detail', kwargs={"pk": pk})

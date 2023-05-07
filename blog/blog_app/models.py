@@ -9,4 +9,3 @@ class Post(models.Model):
     def __str__(self):
         first_title = self.title.split(' ')
         return ' '.join(first_title[:3])
-        
