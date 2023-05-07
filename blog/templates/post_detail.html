@@ -1,0 +1,16 @@
+{% extends '__base__.html '%}
+
+{% block content%}
+<div class="container my-5">
+    <div class="p-5 text-center bg-body-tertiary rounded-3">
+    <img src="https://cdns.iconmonstr.com/wp-content/releases/preview/2017/240/iconmonstr-book-27.png" alt="Book 27" width="100" height="100">
+      <h1 class="text-body-emphasis">{{post.title}}</h1>
+      <p class="col-lg-8 mx-auto fs-5 text-muted">
+        {{post.description}}
+      </p>
+      <div class="d-inline-flex gap-2 mb-5">
+        <h3>Created at: {{post.date_created}}</h3>
+      </div>
+    </div>
+  </div> 
+{% endblock %}
