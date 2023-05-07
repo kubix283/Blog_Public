@@ -17,6 +17,7 @@ Aplikacja może działać na dowolnej platformie obsługującej Python 3.x oraz 
 1. Sklonuj repozytorium:
 
 git clone https://github.com/kubix283/Blog_Public.git
+
 2. Utwórz i aktywuj wirtualne środowisko dla Pythona (opcjonalnie).
 
 3. Zainstaluj wymagane biblioteki z pliku requirements.txt:
