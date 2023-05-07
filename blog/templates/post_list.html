@@ -1,7 +1,7 @@
 {% extends '__base__.html' %}
 {% block content%}
 <div class="container px-4 py-5" id="featured-3">
-    <h2 class="pb-2 border-bottom">List of Posts</h2>
+    <h2 class="pb-2 border-bottom">List of Posts <a class="btn btn-success" href="{% url 'post_create'%}"> Add Post </a> </h2>
     <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
     {% for post in posts %}
       <div class="feature col">

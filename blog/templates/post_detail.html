@@ -9,7 +9,8 @@
         {{post.description}}
       </p>
       <div class="d-inline-flex gap-2 mb-5">
-        <h3>Created at: {{post.date_created}}</h3>
+        <h4 class="btn btn-info rounded-pill px-3">Created at: {{post.date_created}}</h4>
+        <a class="btn btn-info rounded-pill px-3" href="{% url 'post_update' post.pk %}">Update</a>
       </div>
     </div>
   </div> 
