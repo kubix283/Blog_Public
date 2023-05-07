@@ -2,7 +2,7 @@ from django.urls import reverse_lazy, reverse
 from django.shortcuts import render
 from .models import Post
 from django.views.generic import (ListView, DetailView, CreateView,
-                                  UpdateView)
+                                  UpdateView, DeleteView,)
 
 
 class PostListView(ListView):
@@ -34,3 +34,7 @@ class PostUpdateView(UpdateView):
         pk = self.kwargs["pk"]
         return reverse('post_detail', kwargs={"pk": pk})
 
+
+class PostDeleteView(DeleteView):
+    model = Post
+    success_url = reverse_lazy('post_list')

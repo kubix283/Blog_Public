@@ -9,9 +9,13 @@
         {{post.description}}
       </p>
       <div class="d-inline-flex gap-2 mb-5">
-        <h4 class="btn btn-info rounded-pill px-3">Created at: {{post.date_created}}</h4>
+        <p class="btn btn-info rounded-pill px-3">Created at: {{post.date_created}}<p>
         <a class="btn btn-info rounded-pill px-3" href="{% url 'post_update' post.pk %}">Update</a>
-      </div>
+        <form action="{% url 'post_delete' post.pk %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger rounded-pill px-3">Delete</button>
+        </form>
+        </div>
     </div>
   </div> 
 {% endblock %}
