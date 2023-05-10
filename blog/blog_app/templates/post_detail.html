@@ -10,11 +10,13 @@
       </p>
       <div class="d-inline-flex gap-2 mb-5">
         <p class="btn btn-info rounded-pill px-3">Created at: {{post.date_created}}<p>
-        <a class="btn btn-info rounded-pill px-3" href="{% url 'post_update' post.pk %}">Update</a>
+        {% if user.username == post.author.username %}
+          <a class="btn btn-info rounded-pill px-3" href="{% url 'post_update' post.pk %}">Update</a>
         <form action="{% url 'post_delete' post.pk %}" method="post">
             {% csrf_token %}
             <button type="submit" class="btn btn-danger rounded-pill px-3">Delete</button>
         </form>
+        {% endif %}
         </div>
     </div>
   </div> 

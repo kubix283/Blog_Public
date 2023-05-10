@@ -18,3 +18,6 @@ class RegistrationUserForm(UserCreationForm):
         
         return user
     
+
+
+    

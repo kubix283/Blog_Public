@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, logout
+from django.contrib.auth import login, logout, get_user_model
 from django.contrib import messages
 from .forms import RegistrationUserForm
+from blog_app.models import Post
 
 
 def register(request):
@@ -28,4 +29,10 @@ def logout_user(request):
     logout(request)
     return redirect('/')
 
+
+def profile_user(request, username):
+    user = request.user
+    posts = Post.objects.filter(author__username=user.username).count()
+    if user:
+        return render(request, 'accounts/profile.html', {'user': user, 'posts': posts})
 

@@ -1,5 +1,9 @@
 from django.urls import reverse_lazy, reverse
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from .models import Post
+from .forms import PostForm
 from django.views.generic import (ListView, DetailView, CreateView,
                                   UpdateView, DeleteView,)
 
@@ -16,12 +20,20 @@ class PostDetailView(DetailView):
     context_object_name = 'post'
     template_name = 'post_detail.html'
 
-
-class PostCreateView(CreateView):
-    model = Post
-    template_name = 'post_create.html'
-    fields = ['title', 'description']
-    success_url = reverse_lazy('post_list')
+@login_required
+def create_post(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST)
+        if form.is_valid():
+            author = request.user
+            post = form.save(commit=False)
+            post.author = author
+            post.save()
+            messages.success(request, 'Post created successfully')
+            return redirect('post_list')
+    else:
+        form = PostForm()
+    return render(request, 'post_create.html', {'form': form})
 
 
 class PostUpdateView(UpdateView):
