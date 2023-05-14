@@ -25,7 +25,9 @@
                                     <li class="mb-2 mb-xl-3 display-28"><span class="display-26 text-secondary me-2 font-weight-600">Age:</span> {{user.age}} Years</li>
                                     <li class="mb-2 mb-xl-3 display-28"><span class="display-26 text-secondary me-2 font-weight-600">Email:</span> {{user.email}}</li>
                                     <li class="mb-2 mb-xl-3 display-28"><span class="display-26 text-secondary me-2 font-weight-600">sex:</span> {{user.sex}}</li>
+                                    {% if user.profile_image %}
                                     <li class="mb-2 mb-xl-3 display-28"><span class="display-26 text-secondary me-2 font-weight-600">Link to your profile picture:</span><a href="{{user.profile_image.url}}">Link</a></li>
+                                    {% endif %}
                                     {% if user.phone %}
                                     <li class="display-28"><span class="display-26 text-secondary me-2 font-weight-600">Phone:</span>{{user.phone}}</li>
                                     {% else %}

@@ -23,12 +23,14 @@ class CustomUser(AbstractUser):
     thumbnail = models.ImageField(upload_to='thumbnail/', blank=True, null=True)
 
     def save(self, *args, **kwargs):
-        if self.profile_image :
+        if self.profile_image:
             self.create_thumbnail_100()
         super().save(*args, **kwargs)
 
     def create_thumbnail_100(self):
         im = PILImage.open(self.profile_image)
+        if im.mode in ("RGBA", "P"):
+            im = im.convert("RGB")
         output_size = (200, 200)
         im.thumbnail(output_size)
         thumbnail_io = BytesIO()

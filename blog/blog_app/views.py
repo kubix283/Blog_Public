@@ -1,9 +1,9 @@
 from django.urls import reverse_lazy, reverse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import Post
-from .forms import PostForm
+from .models import Post, Comment
+from .forms import PostForm, CommentForm
 from django.views.generic import (ListView, DetailView,
                                   UpdateView, DeleteView,)
 
@@ -15,10 +15,10 @@ class PostListView(ListView):
     ordering = ['date_created']
 
 
-class PostDetailView(DetailView):
-    model = Post
-    context_object_name = 'post'
-    template_name = 'post_detail.html'
+# class PostDetailView(DetailView):
+#     model = Post
+#     context_object_name = 'post'
+#     template_name = 'post_detail.html'
 
 @login_required
 def create_post(request):
@@ -49,3 +49,24 @@ class PostUpdateView(UpdateView):
 class PostDeleteView(DeleteView):
     model = Post
     success_url = reverse_lazy('post_list')
+
+
+# @login_required(login_url="/login/")
+def comment_post(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    comments = Comment.objects.filter(post=post)
+    if request.method == 'POST':
+        form = CommentForm(request.POST)      
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.author = request.user
+            comment.save()
+            messages.success(request, 'Comment posted successfully')
+            return redirect('post_detail', post.pk)
+        for error in list(form.errors.values()):
+            messages.error(request, error)
+    else:
+        form = CommentForm()
+    return render(request, 'post_detail.html', {'form': form, 'post': post, 'comments': comments})
+

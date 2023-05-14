@@ -1,4 +1,5 @@
 {% extends '__base__.html '%}
+{% load crispy_forms_tags %}
 
 {% block content%}
 <div class="container my-5">
@@ -8,16 +9,85 @@
       <p class="col-lg-8 mx-auto fs-5 text-muted">
         {{post.description}}
       </p>
-      <div class="d-inline-flex gap-2 mb-5">
+      <div class="d-inline-flex gap-1 mb-5">
         <p class="btn btn-info rounded-pill px-3">Created at: {{post.date_created}}<p>
         {% if user.username == post.author.username %}
           <a class="btn btn-info rounded-pill px-3" href="{% url 'post_update' post.pk %}">Update</a>
-        <form action="{% url 'post_delete' post.pk %}" method="post">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-danger rounded-pill px-3">Delete</button>
-        </form>
+          <form action="{% url 'post_delete' post.pk %}" method="post">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-danger rounded-pill px-3">Delete</button>
+          </form>
+          {% else %}
+          <p class="btn btn-info rounded-pill px-3">{{post.author}}</p>
         {% endif %}
         </div>
     </div>
-  </div> 
+  </div>
+  {% if comments %}
+  {% for comment in comments %}
+  <section>
+    <div class="container text-dark">
+      <div class="row d-flex justify-content-center">
+        <div class="col-md-11 col-lg-9 col-xl-7">
+          <div class="d-flex flex-start mb-4">
+            <img class="rounded-circle shadow-1-strong me-3"
+              src="{{comment.author.profile_image.url}}" alt="avatar" width="65"
+              height="65" />
+            <div class="card w-100">
+              <div class="card-body p-4">
+                <div class="">
+                  <div class="text-end">
+                    <h4>{{comment.author.first_name}} {{comment.author.last_name}}</h4>
+                  </div>
+                  <h5>{{comment.title}}</h5>
+                  <p>{{comment.description}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  {% endfor %}
+  {% endif %}
+  {% if user.is_authenticated %}
+    {% if user.username != post.author.username %}
+    <section>
+      <div class="container my-5 py-5 text-dark">
+        <div class="row d-flex justify-content-center">
+          <div class="col-md-10 col-lg-8 col-xl-6">
+            <div class="card">
+              <div class="card-body p-4">
+                <div class="d-flex flex-start w-100">
+                  <img class="rounded-circle shadow-1-strong me-3"
+                    src="{{user.profile_image.url}}" alt="avatar" width="65"
+                    height="65" />
+                    <div class="w-100">
+                      <form method="POST">
+                        {% csrf_token %}
+                        <div class="form-outline">
+                          <h5>Add a comment</h5>
+                            <div class="d-flex justify-content-between mt-3">
+                              <textarea class="form-control" name="title" id="title" rows="1" placeholder="Title"></textarea>
+                            </div>
+                            <div class="d-flex justify-content-between mt-3">
+                              <textarea class="form-control" name="description" id="description" rows="4" placeholder="Description"></textarea>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between mt-3">
+                          <button type="submit" class="btn btn-danger">
+                            Send <i class="fas fa-long-arrow-alt-right ms-1"></i>
+                          </button>
+                        </div>
+                      </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    {% endif %}
+  {% endif %}
 {% endblock %}
