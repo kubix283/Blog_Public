@@ -33,10 +33,9 @@ def logout_user(request):
 @login_required(login_url="/login/")
 def profile_user(request, username):
     user = request.user
-    profile_img = user.thumbnail
     posts = Post.objects.filter(author__username=user.username).count()
     if user:
-        return render(request, 'accounts/profile.html', {'user': user, 'posts': posts, 'profile_img': profile_img})
+        return render(request, 'accounts/profile.html', {'user': user, 'posts': posts})
 
 
 def edit_profile(request, username):

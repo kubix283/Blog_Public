@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     # Own apps
     'blog_app',
     'accounts',
+    'comments',
     # Libraries
     'crispy_forms',
     "crispy_bootstrap5",
