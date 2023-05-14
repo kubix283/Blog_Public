@@ -1,0 +1,14 @@
+{% extends '__base__.html'%}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="col-lg-7 mx-auto fs-6 text-muted">
+        <form method="post" enctype='multipart/form-data'>
+            {% csrf_token %}
+            {{form|crispy}}
+            <button type="submit" class="d-inline-flex align-items-center btn btn-primary btn-lg px-4 rounded-pill">Update</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

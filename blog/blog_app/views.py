@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Post
 from .forms import PostForm
-from django.views.generic import (ListView, DetailView, CreateView,
+from django.views.generic import (ListView, DetailView,
                                   UpdateView, DeleteView,)
 
 

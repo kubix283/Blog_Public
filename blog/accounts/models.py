@@ -23,7 +23,7 @@ class CustomUser(AbstractUser):
     thumbnail = models.ImageField(upload_to='thumbnail/', blank=True, null=True)
 
     def save(self, *args, **kwargs):
-        if self.profile_image and not self.thumbnail:
+        if self.profile_image :
             self.create_thumbnail_100()
         super().save(*args, **kwargs)
 
