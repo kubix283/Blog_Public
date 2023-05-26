@@ -41,7 +41,9 @@ INSTALLED_APPS = [
     # Own apps
     'blog_app',
     'accounts',
+    'api',
     # Libraries
+    'rest_framework',
     'crispy_forms',
     "crispy_bootstrap5",
     "phonenumber_field",
