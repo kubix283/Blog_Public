@@ -16,3 +16,16 @@ class UserUpdateSerializer(serializers.ModelSerializer):
         model = CustomUser
         fields = ['first_name', 'last_name', 'username', 'age',
                   'about_me', 'phone', 'sex']
+        
+
+class AuthorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ['username']
+
+
+class PostSerializer(serializers.ModelSerializer):
+    author = AuthorSerializer(read_only=True)
+    class Meta:
+        model = Post
+        fields = ['id', 'title', 'description', 'author']

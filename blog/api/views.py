@@ -1,6 +1,8 @@
 from rest_framework.response import Response
-from .serializers import UserSerializer, UserUpdateSerializer
+from .serializers import UserSerializer, UserUpdateSerializer, PostSerializer
 from accounts.models import CustomUser
+from blog_app.models import Post, Comment
+from .permissions import IsOwnerOrReadOnly, IsOwnerAndAdmin
 from rest_framework import generics, permissions, status
 
 
@@ -17,6 +19,22 @@ class RetrieveUpdateDestroyUsersAPI(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.IsAdminUser]
 
 
+class ListPostAPI(generics.ListAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
+class RetrieveUpdatePostAPI(generics.RetrieveUpdateAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+    permission_classes = [permissions.IsAuthenticated, IsOwnerOrReadOnly]
+
+
+class DestroyPostAPI(generics.RetrieveDestroyAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+    permission_classes = [IsOwnerAndAdmin, permissions.IsAuthenticated]
 
 
 
