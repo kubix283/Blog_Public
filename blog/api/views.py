@@ -1,10 +1,8 @@
-from rest_framework.response import Response
 from .serializers import UserSerializer, UserUpdateSerializer, PostSerializer
 from accounts.models import CustomUser
 from blog_app.models import Post, Comment
 from .permissions import IsOwnerOrReadOnly, IsOwnerAndAdmin
-from rest_framework import generics, permissions, status
-
+from rest_framework import generics, permissions
 
 
 class ListUsersAPI(generics.ListAPIView):
@@ -38,7 +36,6 @@ class DestroyPostAPI(generics.RetrieveDestroyAPIView):
 
 
 
-    
 
 
 
